@@ -3,14 +3,21 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
+#include <map>
+
 
 
 static char** matrix;
 static int dimension = -1;
+static std::map<int, std::vector<int>> nmap;//for each symbol this contains the numbers adjacent to each symbol
 
 long int calculate_sum();
 bool hits_symbol(int xstart, int ystart, int len);
+std::vector<int> symbols_hit(int startx, int starty, int len);
 bool is_symbol(int x, int y);
+
+
+void  generate_map();
 
 
 int main(int argc, char** argv){
@@ -52,10 +59,17 @@ int main(int argc, char** argv){
 }
 
 
+void generate_map(){
 
-long int calculate_sum(){
+    for(int i = 0; i < dimension; i++){
+        for(int x = 0; x < dimension; x++){
 
-    long int summe = 0L;
+            std::vector<int> temp;
+            nmap[i*dimension + x] = temp;
+
+        }
+    }
+
 
     for(int y = 0; y < dimension; y++){
         int x = 0;
@@ -74,9 +88,13 @@ long int calculate_sum(){
             }
 
             int len = number.size();
-            if(len > 0 && hits_symbol(startx, starty, len)) {
+            if(len > 0) {
                 long int n = static_cast<long int>(std::stoi(number));
-                summe += n;
+                std::vector<int> hitsyms = symbols_hit(startx, starty, len);
+                for(int el : hitsyms){
+                    nmap[el].push_back(n);
+                }
+
             }
 
 
@@ -85,7 +103,43 @@ long int calculate_sum(){
         }
     }
 
+
+}
+
+long int calculate_sum(){
+
+    long int summe = 0L;
+
+    generate_map();
+
+    for(auto& el : nmap){
+        
+        std::vector<int> hits = el.second;
+        if (hits.size() == 2){
+            summe += hits[0]*hits[1];
+        }
+
+    }
+
+
     return summe;
+
+}
+
+std::vector<int> symbols_hit(int startx, int starty, int len){
+
+    std::vector<int> back;
+
+    for(int i = startx-1; i < startx+len+1; i++){
+        if (is_symbol(i, starty-1)) back.push_back((starty-1)*dimension+i);
+        if(is_symbol(i, starty+1)) back.push_back((starty+1)*dimension+i);
+    }
+
+
+    if (is_symbol(startx-1, starty)) back.push_back((starty)*dimension+startx-1);
+    if (is_symbol(startx+len, starty)) back.push_back((starty)*dimension+startx+len);
+
+    return std::move(back);
 
 }
 
