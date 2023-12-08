@@ -12,8 +12,8 @@ def compute_value(line, queue):
 	
 	correct = len(winners.intersection(guesses))
 	
-	own_times = queue.popleft()+1
-	queue.append(0)
+	own_times = queue.popleft()
+	queue.append(1)
 	for i in range(correct):
 
 		queue[i] += own_times
@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
 	path = sys.argv[1]
 
-	queue = deque((0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
+	queue = deque((1 for i in range(20)))
 
 	with open(path, "r") as f:
 
