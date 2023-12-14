@@ -5,6 +5,7 @@
 #include <tuple>
 #include <vector>
 
+
 std::map<std::string, std::map<std::string, std::string>> vmap; //values mapped in form: {A : {L : B, R: B}}
 
 std::tuple<std::string, int> find_way(std::string input, std::string sequence);
@@ -48,7 +49,6 @@ int main(int argc, char** argv){
 
 	std::cout << steps << std::endl;
 
-
 	return 0;
 }
 
@@ -60,9 +60,14 @@ std::tuple<std::string, int> find_way(std::string input, std::string sequence){
 	std::map<std::string, std::string>& targets = vmap[input];
 	//checking if ZZZ can be reached with subsequence
 
+	/*
+
 	for(auto& el : targets){
+		lookups++;
 		std::string way = el.first;
 		std::string goal = el.second;
+
+
 
 		if (goal == "ZZZ"){
 
@@ -72,6 +77,7 @@ std::tuple<std::string, int> find_way(std::string input, std::string sequence){
 				if (way == sub){
 					
 					int backlen = sequence.size()-i;
+					saved_steps += backlen;
 					std::tuple<std::string, int> back{"ZZZ", backlen};
 					return std::move(back);
 				}
@@ -81,6 +87,10 @@ std::tuple<std::string, int> find_way(std::string input, std::string sequence){
 		}
 		
 	}
+
+	*/
+
+		
 
 	std::string next = targets[sequence.substr(0, 1)];
 	if (sequence.size() == 1){
