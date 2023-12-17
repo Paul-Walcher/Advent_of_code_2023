@@ -77,7 +77,6 @@ void map_point(Point& p, char c){
 
 }
 
-bool inside(int, int, char**, int, int);
 
 
 std::tuple<char**, int, int> get_matrix(std::string&);//tuple<matrix, height, width>
@@ -259,15 +258,6 @@ int traverse(char** matrix, int height, int width){
 	}
 
 
-	/*
-
-	for(int y = 0; y < height; y++){
-		for(int x = 0; x < width; x++){
-			std::cout << inoutmatrix[y][x] << " ";
-		}
-		std::cout << "\n";
-	}
-	*/
 
 	for(int y = 0; y < height; y++){
 		delete [] inoutmatrix[y];
@@ -344,48 +334,5 @@ std::vector<Point> find_branchpoints(Point& S, char** matrix, int height, int wi
 
 
 	return std::move(back);
-
-}
-
-bool inside(int y, int x, char** matrix, int height, int width){
-
-	if(matrix[y][x] == 'X') return false;
-
-	//cast a ray in 4 directions
-	int up, left, right, down;
-
-	//casting up
-	for(int y_ = y; y_ >= 0; y_--){
-
-		if(matrix[y_][x] == 'X') up++;
-
-	}
-	for(int y_ = y; y_ <= height-1; y_++){
-
-		if(matrix[y_][x] == 'X') down++;
-
-	}
-
-	for(int x_ = x; x_ >= 0; x_--){
-
-			if(matrix[y][x_] == 'X') left++;
-
-	}
-
-	for(int x_ = x; x_ <= width-1; x_++){
-
-			if(matrix[y][x_] == 'X') right++;
-
-	}
-
-	up = up%2;
-	down = down%2;
-	right = right%2;
-	left = left%2;
-
-	float summe = up+down+right+left;
-	summe = summe/4;
-	return static_cast<bool>(up);
-
 
 }
