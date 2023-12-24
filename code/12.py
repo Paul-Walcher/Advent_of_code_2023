@@ -79,6 +79,10 @@ if __name__ == "__main__":
 
 		X, N = line[0], line[1]
 
-		total += sum([possible(x, N) for x in all_possibilities(X)])
+		s =  sum([possible(x, N) for x in all_possibilities(X)])
+
+		print(X, N, s)
+
+		total += s
 	
 	print(total)
