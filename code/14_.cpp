@@ -89,11 +89,11 @@ void spin(std::vector<std::vector<grid_object>>& objects){
 
 		if (std::find(states.begin(), states.end(), after) != states.end()){
 			
-			//state found, now getting the remaining time and performing it modulo
+			//repeating state found, now getting the remaining cycles and predicting the final result
 			std::vector<std::string>::iterator it = std::find(states.begin(), states.end(), after);
 			int remaining = std::distance(it, states.end());
 
-			int pointer = ((static_cast<int>(1E9)-i) % remaining) - 1;
+			int pointer = ((static_cast<int>(1E9 - 1)-i) % remaining);
 			construct_from_string(objects, *(it + pointer));
 			break;
 
